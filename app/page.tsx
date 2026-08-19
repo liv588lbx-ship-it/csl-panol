@@ -124,10 +124,10 @@ export default function PanolApp() {
     const { data: recs } = await supabase.from('recepciones').select('*');
     const { data: vales } = await supabase.from('vales_salida').select('*');
 
-    // Cruzamos los datos por código SAP
-    const stockCalculado = (mats || []).map(m => {
-      const ingresado = (recs || []).filter(r => r.codigo_sap === m.codigo_sap).length; // o sumando cantidades si las guardas
-      const entregado = (vales || []).filter(v => v.codigo_sap === m.codigo_sap).reduce((acc, v) => acc + (Number(v.cantidad) || 0), 0);
+    // Cruzamos los datos por código SAP tipando explícitamente el objeto
+    const stockCalculado = (mats || []).map((m: any) => {
+      const ingresado = (recs || []).filter((r: any) => r.codigo_sap === m.codigo_sap).length;
+      const entregado = (vales || []).filter((v: any) => v.codigo_sap === m.codigo_sap).reduce((acc: number, v: any) => acc + (Number(v.cantidad) || 0), 0);
       return {
         ...m,
         ingresado,
