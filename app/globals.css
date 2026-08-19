@@ -19,8 +19,129 @@
   }
 }
 
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ============================================================
+   CSL PAÑOL — COMPORTAMIENTO MOBILE
+   En teléfonos el menú lateral pasa arriba como una barra
+   horizontal desplazable. Así nunca tapa el contenido.
+   ============================================================ */
+
+@media (max-width: 767px) {
+  body {
+    overflow: hidden;
+  }
+
+  /* Contenedor raíz de PanolApp */
+  body > div {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  /* Sidebar -> barra superior */
+  body > div > aside {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    flex: 0 0 auto !important;
+    position: relative !important;
+    z-index: 20 !important;
+  }
+
+  /* Ocultamos el texto inferior de la sidebar en móvil */
+  body > div > aside > div:last-child {
+    display: none !important;
+  }
+
+  /* Marca compacta */
+  body > div > aside > div:first-child {
+    padding: 10px 14px !important;
+  }
+
+  body > div > aside > div:first-child h2 {
+    font-size: 15px !important;
+  }
+
+  /* Menú horizontal */
+  body > div > aside > nav {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    gap: 6px !important;
+    padding: 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  body > div > aside > nav button {
+    width: auto !important;
+    min-width: max-content !important;
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    padding: 9px 12px !important;
+  }
+
+  /* Área principal ocupa todo el espacio restante */
+  body > div > main {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Cabecera compacta */
+  body > div > main > header {
+    min-height: 56px !important;
+    height: auto !important;
+    padding: 10px 14px !important;
+    gap: 8px !important;
+  }
+
+  body > div > main > header h1 {
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* El estado de conexión no necesita ocupar espacio en el teléfono */
+  body > div > main > header > div {
+    display: none !important;
+  }
+
+  /* Menos margen lateral para formularios y tarjetas */
+  body > div > main > div {
+    padding: 14px !important;
+  }
+
+  /* Formularios de dos columnas -> una columna */
+  .grid-cols-2 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Tablas siguen siendo desplazables horizontalmente */
+  table {
+    min-width: 680px;
+  }
+
+  /* Evita que textos largos rompan el ancho del teléfono */
+  input,
+  select,
+  button,
+  textarea {
+    max-width: 100%;
+  }
 }
